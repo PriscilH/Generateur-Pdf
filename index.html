@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GÉNÉRATEUR DE PDF</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+    <!-- Zone de saisie du texte -->
+    <textarea id="text" placeholder="Votre texte"></textarea>
+    <!-- Bouton pour générer le PDF -->
+    <button onclick="genererPDF()">Télécharger le PDF</button>
+
+    <script>
+        // Fonction pour générer le PDF
+        function genererPDF() {
+            // Demander le nom du fichier
+            const nomFichier = prompt("Nom du fichier PDF :");
+
+            // Sélectionner le contenu de la zone de texte
+            const contenu = document.getElementById('texte').value;
+
+            // Options pour la génération du PDF
+            const options = {
+                margin: 0.5,
+                filename: `${nomFichier}.pdf`,
+                image: { type: 'jpeg', quality: 1 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+            };
+
+            if (nomFichier !== null && nomFichier !== '') {
+                // Générer le PDF à partir du contenu et enregistrer
+                html2pdf().set(options).from(contenu).save();
+            } else {
+                alert("Veuillez choisir un nom pour le fichier.");
+            }
+        }
+    </script>
+</body>
+</html>
